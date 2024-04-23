@@ -72,7 +72,6 @@ async function fetch() {
   try {
     loading.value = true;
     var res = await fetchUser(props.id);
-    notificationStore.PushNotification(res.message, res.statusCode);
     state.role = res.data.role;
     state.email = res.data.email;
     state.phone = res.data.phone;

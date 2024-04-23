@@ -52,7 +52,6 @@ async function fetch() {
   try {
     loading.value = true;
     var res = await fetchAccordion(props.id)
-    notificationStore.PushNotification(res.message , res.statusCode)
     state.content = res.data.content;
     state.label = res.data.label;
     state._id = res.data._id;

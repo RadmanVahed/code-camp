@@ -49,7 +49,6 @@ async function fetch() {
   try {
     loading.value = true;
     var res = await fetchCourse(accountStore.courseId);
-    notificationStore.PushNotification(res.message, res.statusCode);
     state.course = res.data;
     supervisor.value = state.course.supervisor.username;
     console.log(state.course);

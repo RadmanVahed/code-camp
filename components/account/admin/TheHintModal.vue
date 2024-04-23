@@ -60,7 +60,6 @@ async function fetch() {
   try {
     loading.value = true;
     var res = await fetchHint(props.id);
-    notificationStore.PushNotification(res.message, res.statusCode);
     state.content = res.data.content;
     state.label = res.data.label;
     state.icon = res.data.icon;

@@ -88,7 +88,6 @@ async function fetch() {
   try {
     loading.value = true;
     var res = await // fetchSection();
-    notificationStore.PushNotification(res.message, res.statusCode);
     state.username = res.data.username;
     state.phone = res.data.phone;
     state.image = res.data.image;

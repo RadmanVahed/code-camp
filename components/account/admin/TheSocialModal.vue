@@ -55,7 +55,6 @@ async function fetch() {
   try {
     loading.value = true;
     var res = await fetchSocial();
-    notificationStore.PushNotification(res.message, res.statusCode);
     state.githubUrl = res.data.githubUrl;
     state.instagramUrl = res.data.instagramUrl;
     state.telegramUrl = res.data.telegramUrl;

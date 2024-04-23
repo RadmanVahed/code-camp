@@ -52,7 +52,6 @@ async function fetch() {
     loading.value = true;
     var res = await fetchCourseImage(accountStore.courseId);
     console.log(res.data);
-
     label.value = res.data.split("/")[1];
   } catch (error) {
     notificationStore.CatchNotification();
