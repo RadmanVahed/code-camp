@@ -1,232 +1,106 @@
 <template>
- <div>
-  <header style="z-index:1;" class="dark:bg-gray-900 border-b fixed top-0  bg-white w-full  border-orange-400">
-    <nav
-      class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
-      aria-label="Global"
+  <header
+    class="z-50 bg-white dark:bg-gray-900 w-full top-0"
+  >
+    <UHorizontalNavigation
+      :links="links"
+      class="border-b border-orange-300 dark:border-gray-800 hidden md:flex"
+    />
+    <div
+      class="flex pb-4 border-b border-orange-300 dark:border-gray-800 justify-between md:hidden"
     >
-      <div class="flex lg:flex-1">
-        <a href="#" class="-m-1.5 p-1.5">
-            <ClientOnly>
-                <UButton
-                  :icon="isDark ? 'i-heroicons-moon-20-solid' : 'i-heroicons-sun-20-solid'"
-                  color="gray"
-                  variant="ghost"
-                  aria-label="Theme"
-                  @click="isDark = !isDark"
-                />
-            
-                <template #fallback>
-                  <div class="w-8 h-8" />
-                </template>
-              </ClientOnly>
-         
-          
-        </a>
-      </div>
-      <div class="flex lg:hidden">
-        <button
-          type="button"
-          class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-          @click="mobileMenuOpen = true"
-        >
-          <span class="sr-only">Open main menu</span>
-          <Bars3Icon class="h-6 w-6" aria-hidden="true" />
-        </button>
-      </div>
-      <PopoverGroup class="hidden lg:flex lg:gap-x-12">
-        <a href="#" class="text-sm  leading-6 font-mono"
-          >کمپ ها</a
-        >
-        <a href="#" class="text-sm  leading-6 font-mono"
-          >بلاگ</a
-        >
-        <a href="#" class="text-sm  leading-6 font-mono"
-          >تیم</a
-        >
-        <a href="#" class="text-sm  leading-6 font-mono"
-          >درباره ما</a
-        >
-        <a href="#" class="text-sm  leading-6 font-mono"
-          >ارتباط با ما</a
-        >
-      </PopoverGroup>
-      
-      <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-        <UButton class="mr-2 font-mono border-gray-400" color="white" variant="solid"><nuxt-link to="/">ورود</nuxt-link></UButton>
-        <UButton icon="i-heroicons-pencil-square"
-        size="sm"
-        color="orange"
-        variant="solid"
-        label="Button"
-        :trailing="false" ><a href="" class="font-mono">ثبت نام</a
-          ></UButton>
-        
-      </div>
-    </nav>
-    <Dialog 
-      
-      class="lg:hidden"
-      @close="mobileMenuOpen = false"
-      :open="mobileMenuOpen"
-    >
-      <div class="fixed inset-0 z-10" />
-      <DialogPanel 
-        class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto dark:bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
+      <UButton
+        class="mt-4 mr-4"
+        color="white"
+        icon="i-heroicons-bars-4"
+        @click="isOpen = true"
+      />
+      <ULink
+        class="mt-4 ml-4"
+        to="/"
+        active-class="dark:text-white"
+        inactive-class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
       >
-        <div class="flex items-center justify-between" >
-          <a href="#" class="-m-1.5 p-1.5">
-            <span class="sr-only">Your Company</span>
-            <img class="h-8 w-auto" alt="" />
-          </a>
-          <button 
-            type="button"
-            class="-m-2.5 rounded-md p-2.5 text-gray-700"
-            @click="mobileMenuOpen = false"
-          >
-            <span class="sr-only">Close menu</span>
-            <XMarkIcon class="h-6 w-6" aria-hidden="true" />
-          </button>
-        </div>
-        <div class="mt-6 flow-root bg-white dark:bg-gray-900">
-          <div class="-my-6 divide-y divide-gray-500/10">
-            <div class="space-y-2 py-6">
-              <Disclosure as="div" class="-mx-3" v-slot="{ open }">
-                <UVerticalNavigation
-                :links="links"
-                :ui="{
-                  wrapper:
-                    'border-s border-gray-200 dark:border-gray-800 space-y-2',
-                  base: 'group block border-s -ms-px lg:leading-6 before:hidden',
-                  padding: 'p-0 ps-4',
-                  rounded: '',
-                  font: '',
-                  ring: '',
-                  active:
-                    'text-primary-500 dark:text-primary-400 border-current font-semibold',
-                  inactive:
-                    'border-transparent hover:border-gray-400 dark:hover:border-gray-500 text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300',
-                }"
-              />
-              </Disclosure>
-              
-            </div>
-            <div class="py-6">
-              <a
-                href="#"
-                class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >Log in</a
-              >
-            </div>
+        کد کمپ
+      </ULink>
+    </div>
+    <USlideover v-model="isOpen" prevent-close>
+      <UCard
+        class="flex flex-col flex-1"
+        :ui="{
+          body: { base: 'flex-1' },
+          ring: '',
+          divide: 'divide-y divide-gray-100 dark:divide-gray-800',
+        }"
+      >
+        <template #header>
+          <div class="flex items-center justify-between">
+            <h3
+              class="text-base font-semibold leading-6 text-gray-900 dark:text-white"
+            >
+              کد کمپ
+            </h3>
+            <UButton
+              color="gray"
+              variant="ghost"
+              icon="i-heroicons-x-mark-20-solid"
+              class="-my-1"
+              @click="isOpen = false"
+            />
           </div>
-        </div>
-      </DialogPanel>
-    </Dialog>
+        </template>
+        <UVerticalNavigation dir="rtl" :links="links" />
+      </UCard>
+    </USlideover>
   </header>
- </div>
 </template>
-
 <script setup>
-import { ref } from "vue";
-import {
-  Dialog,
-  DialogPanel,
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-  Popover,
-  PopoverButton,
-  PopoverGroup,
-  PopoverPanel,
-} from "@headlessui/vue";
-import {
-  ArrowPathIcon,
-  Bars3Icon,
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
-  XMarkIcon,
-} from "@heroicons/vue/24/outline";
-import {
-  ChevronDownIcon,
-  PhoneIcon,
-  PlayCircleIcon,
-} from "@heroicons/vue/20/solid";
-
-const colorMode = useColorMode()
-
+const isOpen = ref(false);
+const colorMode = useColorMode();
 const isDark = computed({
-  get () {
-    return colorMode.value === 'dark'
+  get() {
+    return colorMode.value === "dark";
   },
-  set () {
-    colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
-  }
-})
-
-const products = [
-  {
-    name: "Analytics",
-    description: "Get a better understanding of your traffic",
-    href: "#",
-    icon: ChartPieIcon,
+  set() {
+    colorMode.preference = colorMode.value === "dark" ? "light" : "dark";
   },
-  {
-    name: "Engagement",
-    description: "Speak directly to your customers",
-    href: "#",
-    icon: CursorArrowRaysIcon,
-  },
-  {
-    name: "Security",
-    description: "Your customers’ data will be safe and secure",
-    href: "#",
-    icon: FingerPrintIcon,
-  },
-  {
-    name: "Integrations",
-    description: "Connect with third-party tools",
-    href: "#",
-    icon: SquaresPlusIcon,
-  },
-  {
-    name: "Automations",
-    description: "Build strategic funnels that will convert",
-    href: "#",
-    icon: ArrowPathIcon,
-  },
-];
-const callsToAction = [
-  { name: "Watch demo", href: "#", icon: PlayCircleIcon },
-  { name: "Contact sales", href: "#", icon: PhoneIcon },
-];
-
-const mobileMenuOpen = ref(false);
+});
 const links = [
-  {
-    label: "Introduction",
-    to: "/getting-started",
-  },
-  {
-    label: "Installation",
-    to: "/getting-started/installation",
-  },
-  {
-    label: "Theming",
-    to: "/getting-started/theming",
-  },
-  {
-    label: "Shortcuts",
-    to: "/getting-started/shortcuts",
-  },
-  {
-    label: "Examples",
-    to: "/getting-started/examples",
-  },
+  [
+    {
+      label: "ورود/ثبت نام",
+      icon: "i-heroicons-arrow-right-start-on-rectangle",
+      to: "/auth",
+    },
+    {
+      label: "کد کمپ",
+      icon: "i-heroicons-home",
+      to: "/",
+    },
+    {
+      label: "کمپ ها",
+      icon: "i-heroicons-academic-cap",
+      to: '/camps',
+    },
+  ],
+  [
+    {
+      label: "راهنمای سایت",
+      icon: "i-heroicons-light-bulb",
+    },
+    {
+      label: "تیم ما",
+      icon: "i-heroicons-users",
+    },
+    {
+      icon: isDark ? "i-heroicons-moon-20-solid" : "i-heroicons-sun-20-solid",
+      click: () => (isDark.value = !isDark.value),
+    },
+  ],
 ];
 </script>
-
-<style>
-
+<style scoped>
+.truncate::after{
+background-color: black !important;
+}
 </style>

@@ -24,44 +24,48 @@
           </defs>
         </svg>
         <div
-          class="mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:py-32 lg:text-left"
+          class="mx-auto rtl:max-w-md text-center  lg:mx-0 lg:flex-auto lg:py-32 "
         >
           <h2
             class="text-3xl font-bold tracking-tight dark:text-white text-black sm:text-4xl"
           >
-             با کد کمپ در برنامه نویسی<br />پیشرفت کن
+             {{ campStore.section?.label }}
           </h2>
           <p class="mt-6 text-lg leading-8 dark:text-gray-300">
-            Ac euismod vel sit maecenas id pellentesque eu sed consectetur.
-            Malesuada adipiscing sagittis vel nulla.
+            {{ campStore.section?.content }}
           </p>
           <div
-            class="mt-10 flex items-center justify-center gap-x-6 lg:justify-start"
+            class="mt-10 flex items-center justify-center gap-x-6"
           >
-            <a
-              href="#"
-              class="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-              >Get started</a
-            >
+          <NuxtLink to="/auth">شروع کن</NuxtLink>
             <a href="#" class="text-sm font-semibold leading-6 dark:text-white"
-              >Learn more <span aria-hidden="true">→</span></a
+              >اطلاعات بیشتر  <span aria-hidden="true">→</span></a
             >
           </div>
         </div>
         <div class="relative w-full mt-16 sm:h-[35rem] md:h-[50rem] h-[22rem] lg:h-[0rem] lg:mt-8">
-          <img
+          <nuxt-img
             class="absolute left-0 top-0 rounded-md bg-white/5 ring-1 ring-white/10"
-            src="../assets/images/test.jpg"
-            alt="App screenshot"
+            :src="fetchImage(campStore.section?.image)"
+            alt="App screenshot" placeholder
           />
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { fetchImage } from "@/utilities/imageUrls";
+import {useCampStore} from '@/stores/camp'
+const campStore = useCampStore()
+
+
+</script>
+
+
 <style scoped>
 .section {
-  z-index: -1;
   width: 100%;
   position: relative;
 }

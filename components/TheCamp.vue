@@ -1,47 +1,63 @@
 <template>
-  <div>
+  <div class="relative">
+    <div class="background">
+      <div>
+      </div>
+    </div>
     <div style="display: grid">
-        <div class="cf-container">
-          <div class="cf-flame-container" id="fireNodes1">
-            <div class="cf-flame"></div>
-            <div class="cf-flame"></div>
-            <div class="cf-flame"></div>
-            <div class="cf-flame"></div>
-            <div class="cf-flame"></div>
-            <div class="cf-flame"></div>
-            <div class="cf-flame"></div>
-          </div>
-          <div class="cf-flame-container" id="fireNodes2">
-            <div class="cf-flame"></div>
-            <div class="cf-flame"></div>
-            <div class="cf-flame"></div>
-            <div class="cf-flame"></div>
-            <div class="cf-flame"></div>
-            <div class="cf-flame"></div>
-            <div class="cf-flame"></div>
-          </div>
-          <div class="cf-flame-container" id="base-fire">
-            <div class="cf-flame"></div>
-            <div class="cf-flame"></div>
-            <div class="cf-flame"></div>
-          </div>
-          <div class="cf-log-container">
-            <div class="cf-log"></div>
-            <div class="cf-log"></div>
-          </div>
+      <div class="cf-container">
+        <div class="cf-flame-container" id="fireNodes1">
+          <div class="cf-flame"></div>
+          <div class="cf-flame"></div>
+          <div class="cf-flame"></div>
+          <div class="cf-flame"></div>
+          <div class="cf-flame"></div>
+          <div class="cf-flame"></div>
+          <div class="cf-flame"></div>
         </div>
-        <h1 class="camp text-3xl md:text-4xl lg:text-5xl xl:text-6xl">به کد کمپ خوش آمدید</h1>
+        <div class="cf-flame-container" id="fireNodes2">
+          <div class="cf-flame"></div>
+          <div class="cf-flame"></div>
+          <div class="cf-flame"></div>
+          <div class="cf-flame"></div>
+          <div class="cf-flame"></div>
+          <div class="cf-flame"></div>
+          <div class="cf-flame"></div>
+        </div>
+        <div class="cf-flame-container" id="base-fire">
+          <div class="cf-flame"></div>
+          <div class="cf-flame"></div>
+          <div class="cf-flame"></div>
+        </div>
+        <div class="cf-log-container">
+          <div class="cf-log"></div>
+          <div class="cf-log"></div>
+        </div>
       </div>
-      <div class="action mt-6">
-        <UButton class="camp mr-5" color="orange" size="md" variant="solid">ورود</UButton>
-        <UButton class="camp" color="orange" size="md" variant="outline"><a style="color:#fb923c">ثبت نام</a></UButton>
-        
+      <h1 class="camp text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
+        به کد کمپ خوش آمدید
+      </h1>
+    </div>
+    <div class="action mt-6">
+      <div class="home__social">
+        <div v-for="(item, index) in social" :key="index">
+          <a :href="item.link" target="_blank" class="home__social-link">
+            <i :class="item.class"></i>
+          </a>
+        </div>
       </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 const { $anime } = useNuxtApp();
+
+var social = [
+  { link: "https://github.com/", class: "ri-github-fill" },
+  { link: "https://www.instagram.com/", class: "ri-instagram-line" },
+  { link: "https://www.linkedin.com/", class: "ri-linkedin-box-line" },
+];
 
 onMounted(() => {
   animateBaseFire();
@@ -114,9 +130,20 @@ function animateFlame3() {
 </script>
 
 <style scoped>
-.action{
-    display: flex;
-    justify-content: center;
+.background {
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-grow: 1;
+  z-index: 0;
+}
+.action {
+  display: flex;
+  justify-content: center;
 }
 h1 {
   display: flex;
@@ -127,7 +154,7 @@ h1 {
   font-weight: bold;
 }
 .cf-container {
-    margin-left: 1rem;
+  margin-left: .5rem;
   box-sizing: content-box;
   width: 300px;
   height: 300px;
@@ -155,6 +182,7 @@ h1 {
     .cf-flame:nth-child(1) {
       background: #c63509;
       opacity: 0.95;
+      margin-left:.5rem;
     }
     .cf-flame:nth-child(2) {
       background: #cd4015;
