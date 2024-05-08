@@ -25,6 +25,7 @@ export const useCampStore = defineStore("camp", () => {
   var social = ref<socialType>();
   var hints = ref<hintType[]>([]);
   var courses = ref<courseType[]>([])
+  const courseId = ref("")
   const isOpen = ref(false);
   const modalType = ref("");
   const accordionId = ref("");
@@ -133,6 +134,7 @@ export const useCampStore = defineStore("camp", () => {
     hints,
     social,
     courses,
+    courseId,
     isOpen,
     modalType,
     accordionId,

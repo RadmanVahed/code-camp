@@ -19,7 +19,8 @@ export default defineAppConfig({
             class:'h-12 mb-4 text-lg',
           },
           item:{
-            size:'text-md'
+            size:'text-md',
+            base:'text-right'
           }
         },
         table:{

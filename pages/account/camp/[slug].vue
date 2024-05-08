@@ -1,5 +1,6 @@
 <template>
-  <UContainer class="mb-12">
+  <UContainer class="mb-12 grid gap-4">
+    <UBreadcrumb :links="links" />
     <div
       class="flex max-md:flex-wrap p-8 dark:bg-gray-950 bg-gray-300 rounded-2xl"
     >
@@ -12,7 +13,7 @@
         <img v-else :src="fetchImage(accountStore.course?.course.image)" alt="" />
       </div>
       <div class="w-full m-4">
-        <h3 class="font-bold text-gray-400 mb-8 text-2xl">
+        <h3 class="font-bold dark:text-gray-400 mb-8 text-2xl">
           کمپ {{ accountStore.course?.course.title }}
         </h3>
         <div class="">
@@ -43,7 +44,7 @@
           />
         </div>
       </div>
-      <div class="w-full bg-white dark:bg-gray-900 p-4 rounded-lg h-full">
+      <div class="w-full bg-white dark:bg-gray-900 p-4 rounded-lg">
         <p>
           {{ accountStore.course?.course.description }}
         </p>
@@ -141,21 +142,18 @@ const max = ref(0);
 const current = ref(0);
 
 const route = useRoute();
-// var state = reactive({
-//   course: {} as courseType,
-//   details: {} as detailsType,
-// });
-// async function fetch() {
-
-//   try {
-    
-//     supervisor.value = res.data.course.supervisor.username;
-//     accountStore.course?.course = res.data.course;
-//     state.details = res.data.details;
-//     max.value = accountStore.course?.course.season.length;
-//     current.value = state.details.completedSeason.length;
-//   } catch (error) {}
-// }
+const links = [{
+  label: 'کد کمپ',
+  icon: 'i-heroicons-home',
+  to: '/'
+}, {
+  label: 'پنل کاربری',
+  icon: 'i-heroicons-square-3-stack-3d',
+  to: '/account'
+}, {
+  label: route.params.slug,
+  icon: 'i-heroicons-link'
+}]
 useLazyAsyncData(() => accountStore.UserCourse(route.params.slug.toString()));
 
 async function submit(id: string) {

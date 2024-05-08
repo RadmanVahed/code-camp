@@ -1,7 +1,5 @@
 <template>
-  <header
-    class="z-50 bg-white dark:bg-gray-900 w-full top-0"
-  >
+  <header class="z-50 bg-white dark:bg-gray-900 w-full top-0">
     <UHorizontalNavigation
       :links="links"
       class="border-b border-orange-300 dark:border-gray-800 hidden md:flex"
@@ -56,7 +54,11 @@
 </template>
 <script setup>
 const isOpen = ref(false);
+const authStore = useAuthStore();
+const campStore = useCampStore();
 const colorMode = useColorMode();
+const auth_label = ref("ورود/ثبت نام");
+const auth_icon = ref("i-heroicons-arrow-right-start-on-rectangle");
 const isDark = computed({
   get() {
     return colorMode.value === "dark";
@@ -65,12 +67,21 @@ const isDark = computed({
     colorMode.preference = colorMode.value === "dark" ? "light" : "dark";
   },
 });
-const links = [
+const isLogin = computed(() => {
+  if (authStore.isLogin()) {
+    auth_label.value = "حساب کاربری";
+    auth_icon.value = "i-heroicons-user";
+    return true;
+  } else {
+    return false;
+  }
+});
+const links = computed(() => [
   [
     {
-      label: "ورود/ثبت نام",
-      icon: "i-heroicons-arrow-right-start-on-rectangle",
-      to: "/auth",
+      label: auth_label.value,
+      icon: auth_icon.value,
+      to: isLogin.value ? "/account" : "/auth",
     },
     {
       label: "کد کمپ",
@@ -80,27 +91,34 @@ const links = [
     {
       label: "کمپ ها",
       icon: "i-heroicons-academic-cap",
-      to: '/camps',
+      to: "/camps",
     },
   ],
   [
     {
       label: "راهنمای سایت",
       icon: "i-heroicons-light-bulb",
+      click: () => {
+        campStore.isOpen = true;
+        campStore.modalType = "راهنما";
+      },
     },
     {
       label: "تیم ما",
       icon: "i-heroicons-users",
     },
     {
-      icon: isDark ? "i-heroicons-moon-20-solid" : "i-heroicons-sun-20-solid",
+      label: isDark.value ? "تاریک" : "روشن",
+      icon: isDark.value
+        ? "i-heroicons-moon-20-solid"
+        : "i-heroicons-sun-20-solid",
       click: () => (isDark.value = !isDark.value),
     },
   ],
-];
+]);
 </script>
 <style scoped>
-.truncate::after{
-background-color: black !important;
+.truncate::after {
+  background-color: black !important;
 }
 </style>

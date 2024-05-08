@@ -2,6 +2,10 @@ import { FetchApi } from "@/utilities/ApiConfig";
 import type { userType } from "@/models/account/userType";
 import type { courseType, userCourseType } from "~/models/home/campTypes";
 
+export async function fetchPanel() {
+  return await FetchApi("account/panel")
+}
+
 export async function fetchUsers() {
   return await FetchApi<[userType]>("account/admin/users");
 }

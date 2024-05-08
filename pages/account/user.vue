@@ -95,7 +95,8 @@
 <script setup lang="ts">
 definePageMeta({
   layout: "account",
-});import { fetchImage } from "~/utilities/imageUrls";
+});
+import { fetchImage } from "~/utilities/imageUrls";
 import { FetchApi } from "@/utilities/ApiConfig";
 const campStore = useCampStore();
 const accountStore = useAccountStore()

@@ -67,7 +67,7 @@ import { fetchProfile } from "~/services/account.service";
 const colorMode = useColorMode();
 const accountStore = useAccountStore()
 const campStore = useCampStore()
-
+const authStore = useAuthStore()
 
 const isDark = computed({
   get() {
@@ -124,6 +124,7 @@ const items = [
     {
       label: "خروج از حساب",
       icon: "i-heroicons-arrow-left-on-rectangle",
+      click: () => (authStore.Logout())
     },
   ],
 ];

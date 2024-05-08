@@ -30,16 +30,18 @@
       <p class="text-start my-4">{{ state.course.description }}</p>
     </div>
     <div>
-      <UButton  :disabled="loading" @click="submit()" block label="ثبت نام" />
+      <UButton :disabled="loading" @click="submit()" block label="ثبت نام" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { courseType } from "@/models/home/campTypes";
-import { fetchCourse, registerCourse } from "~/services/account.service";
-const accountStore = useAccountStore();
+import { registerCourse } from "~/services/account.service";
+import { fetchCourse } from "~/services/camp.service";
+const campStore = useCampStore();
 const notificationStore = useNotificationStore();
+const authStore = useAuthStore();
 const loading = ref(false);
 var state = reactive({
   course: {} as courseType,
@@ -48,9 +50,9 @@ const supervisor = ref("");
 async function fetch() {
   try {
     loading.value = true;
-    var res = await fetchCourse(accountStore.courseId);
+    var res = await fetchCourse(campStore.courseId);
     state.course = res.data;
-    supervisor.value = state.course.supervisor.username;
+    supervisor.value = state.course.supervisor;
     console.log(state.course);
   } catch (error) {
     notificationStore.CatchNotification();
@@ -60,9 +62,16 @@ async function fetch() {
 }
 async function submit() {
   try {
-    loading.value = true;
-    var res = await registerCourse(accountStore.courseId);
-    notificationStore.PushNotification(res.message, res.statusCode);
+    if (authStore.isLogin()) {
+      loading.value = true;
+      var res = await registerCourse(accountStore.courseId);
+      notificationStore.PushNotification(res.message, res.statusCode);
+    } else {
+      notificationStore.PushNotification(
+        "برای ثبت نام ابتدا وارد حساب کاربری خود شوید",
+        400
+      );
+    }
   } catch (error) {
     notificationStore.CatchNotification();
   } finally {

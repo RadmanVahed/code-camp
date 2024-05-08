@@ -15,11 +15,11 @@
       <carousel
         :items-to-show="1.5"
         dir="rtl"
-        :wrap-around="true"
+        :wrap-around="campStore.courses.length > 3"
         :breakpoints="breakpoints"
       >
         <slide
-          v-for="(product, index) in projects"
+          v-for="(course, index) in campStore.courses"
           :key="index"
           style="height: 400px"
         >
@@ -27,18 +27,18 @@
             class="rounded-2xl bg-white dark:bg-gray-900  shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300"
             style="width: 250px"
           >
-            <div class="relative flex items-end overflow-hidden rounded-xl">
-              <img src="@/assets/images/project-img-1.jpg" alt="" />
-            </div>
+          <div class="relative flex items-end overflow-hidden rounded-xl">
+            <nuxt-img placeholder :src="fetchImage(course.image)" loading="lazy" />
+          </div>
             <div class="mt-1 p-2">
-              <h2 class="text-slate-700">{{ product.title }}</h2>
+              <div class="flex justify-center">
+                <UBadge color="lime" variant="soft" :ui="{ rounded: 'rounded-full' }">{{course.level}}</UBadge>
+              </div>
               <div class="mt-3 block items-end justify-between">
-                <p class="text-lg font-bold mb-2">{{ product.description }}</p>
-                <UButton color="orange" class="mb-5"
-                  ><router-link :to="product.link"
-                    >اطلاعات بیشتر</router-link
-                  ></UButton
-                >
+                <p class="text-lg font-bold mb-2">{{ course.title }}</p>
+                <div class="m-4 flex justify-center">
+                  <UButton block @click="registerCamp(course._id)">ثبت نام</UButton>
+                </div>
               </div>
             </div>
           </article>
@@ -48,40 +48,25 @@
         </template>
       </carousel>
     </div>
+    <AccountTheModal />
   </UContainer>
 </template>
 <script setup lang="ts">
-var projects = [
-  {
-    title: "Radman Vahed",
-    description: "Front End Developer",
-    images: ["rad", "bay"],
-    thumbnail: "@/assets/images/project-img-1.jpg",
-    link: "/",                    
-  },
-  {
-    title: "Radman Vahed",
-    description: "Back End Developer",
-    images: ["zad", "ray", "jay"],
-    thumbnail: "@/assets/img/project-img-2.jpg",
-    link: "/",                      
-  },
-  {
-    title: "Radman Vahed",
-    description: "Photo shop",
-    images: ["zad", "ray", "jay"],
-    thumbnail: "@/assets/img/project-img-3.jpg",
-    link: "/",
-  },
-];
+import { fetchImage } from "~/utilities/imageUrls";
+const campStore = useCampStore()
+function registerCamp(id:string){
+  campStore.isOpen = true
+  campStore.modalType = "ثبت نام در کمپ"
+  campStore.courseId = id
+}
 const breakpoints = {
-  720: {
-    itemsToShow: 3,
-    snapAlign: "center",
-  },
   1024: {
     itemsToShow: 4,
     snapAlign: "start",
+  },
+  720: {
+    itemsToShow: 3,
+    snapAlign: "center",
   },
   300: {
     itemsToShow: 1,

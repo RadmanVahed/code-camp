@@ -95,3 +95,6 @@ export const deleteHint = async (id: string | undefined) => {
 export async function fetchCourses() {
   return await FetchApi<[courseType]>("camp/courses")
 }
+export async function fetchCourse(id:string | undefined) {
+  return await FetchApi<courseType>("camp/course/" + id)
+}

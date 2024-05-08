@@ -1,4 +1,6 @@
 <template>
+</template>
+<!-- <template>
   <UForm
     :state="state"
     @submit="submit"
@@ -58,7 +60,6 @@ function handleImage(event: Event) {
       imageSrc.value = e.target.result;
     };
     reader.readAsDataURL(files[0]);
-    console.log(imageSrc);
   }
 }
 if (props.isEdit) {
@@ -98,4 +99,4 @@ async function fetch() {
     loading.value = false
   }
 }
-</script>
+</script> -->
